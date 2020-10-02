@@ -55,8 +55,7 @@
                                 <button type="submit" class="cart-options">Remove</button>
                             </form>
 
-                            {{-- {{ route('cart.switchToSaveForLater', $item->rowId) }} --}}
-                            <form action="" method="POST">
+                            <form action="{{ route('cart.switchToSaveForLater', $item->rowId) }}" method="POST">
                                 {{ csrf_field() }}
 
                                 <button type="submit" class="cart-options">Save for Later</button>
@@ -148,7 +147,7 @@
                 @foreach (Cart::instance('saveForLater')->content() as $item)
                 <div class="cart-table-row">
                     <div class="cart-table-row-left">
-                        <a href="{{ route('shop.show', $item->model->slug) }}"><img src="{{ asset('img/products/'.$item->model->slug.'.jpg') }}" alt="item" class="cart-table-img"></a>
+                        <a href="{{ route('shop.show', $item->model->slug) }}"><img src="{{ asset('img/macbook-pro.png') }}" alt="item" class="cart-table-img"></a>
                         <div class="cart-item-details">
                             <div class="cart-table-item"><a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a></div>
                             <div class="cart-table-description">{{ $item->model->details }}</div>
@@ -156,14 +155,16 @@
                     </div>
                     <div class="cart-table-row-right">
                         <div class="cart-table-actions">
-                            <form action="{{ route('saveForLater.destroy', $item->rowId) }}" method="POST">
+                            {{-- {{ route('saveForLater.destroy', $item->rowId) }} --}}
+                            <form action="" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
                                 <button type="submit" class="cart-options">Remove</button>
                             </form>
 
-                            <form action="{{ route('saveForLater.switchToCart', $item->rowId) }}" method="POST">
+                            {{-- {{ route('saveForLater.switchToCart', $item->rowId) }} --}}
+                            <form action="" method="POST">
                                 {{ csrf_field() }}
 
                                 <button type="submit" class="cart-options">Move to Cart</button>

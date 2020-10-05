@@ -37,6 +37,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        //Check for duplicate to prevent same item to be added more than 1
         $duplicates = Cart::search(function($cartItem) use($request){
             return $cartItem->id === $request->id;
         });
@@ -102,6 +103,15 @@ class CartController extends Controller
         $item = Cart::get($id);
 
         Cart::remove($id);
+
+        //Check for duplicate to prevent same item to be added more than 1
+        $duplicates = Cart::instance('saveForLater')->search(function($cartItem, $rowId) use($id){
+            return $rowId === $id;
+        });
+
+        if($duplicates->isNotEmpty()){
+            return redirect()->route('cart.index')->with('success_message', 'Item is already in the saved for later');
+        }
 
         Cart::instance('saveForLater')->add($item->id, $item->name, 1, $item->price)
                 ->associate('App\Models\Product');
